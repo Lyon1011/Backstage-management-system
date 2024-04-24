@@ -40,6 +40,18 @@
         max-width: 35rem;
         font-family: 'Microsoft YaHei', sans-serif;
         margin-bottom: 0;
+        z-index: 999;
+
+        span {
+            color: #ffffff87;
+        }
+
+        .is-active {
+            span {
+                color: #1f005c;
+            }
+        }
+
         .el-icon {
             margin: 2px 2px 0 0;
         }

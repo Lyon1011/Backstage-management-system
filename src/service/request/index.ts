@@ -86,19 +86,19 @@ class XHRequest {
     }
 
     get<T>(config: XHRequestConfig<T>): Promise<T> {
-        return this.request<T>({ ...config, method: 'GET' })
+        return this.request<T>({ ...config, method: 'GET', headers: {} })
     }
 
     post<T>(config: XHRequestConfig<T>): Promise<T> {
-        return this.request<T>({ ...config, method: 'POST' })
+        return this.request<T>({ ...config, method: 'POST', headers: {} })
     }
 
     delete<T>(config: XHRequestConfig<T>): Promise<T> {
-        return this.request<T>({ ...config, method: 'DELETE' })
+        return this.request<T>({ ...config, method: 'DELETE', headers: {} })
     }
 
     patch<T>(config: XHRequestConfig<T>): Promise<T> {
-        return this.request<T>({ ...config, method: 'PATCH' })
+        return this.request<T>({ ...config, method: 'PATCH', headers: {} })
     }
 }
 

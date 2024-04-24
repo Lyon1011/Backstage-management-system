@@ -1,5 +1,5 @@
 <template>
-    <el-form :rules="rules" :model="auth">
+    <el-form :rules="rules" :model="auth" ref="formRef">
         <el-form-item prop="name">
             <el-input v-model="auth.name" placeholder="请输入用户名" clearable>
                 <template #prepend>
@@ -25,22 +25,42 @@
             <el-checkbox v-model="isKeepPassword">记住密码</el-checkbox>
             <el-link type="primary">忘记密码</el-link>
         </div>
-        <el-button>登录</el-button>
+        <el-button @click="onLogin">登录</el-button>
     </div>
 </template>
 
 <script lang="ts" name="LoginAccount" setup>
     import { ref, reactive } from 'vue'
     import rules from '../config/AccountConfig'
-    interface Auth {
-        name: string
-        password: string
-    }
-    const auth = reactive<Auth>({
-        name: '',
-        password: ''
+    import { ElForm } from 'element-plus'
+    import localCache from '@/utils/cache'
+    import { Account } from '@/store/type'
+    import useLoginStore from '@/store/login'
+
+    const loginStore = useLoginStore()
+    const auth = reactive<Account>({
+        name: localCache.getCache('name') ?? '',
+        password: localCache.getCache('password') ?? ''
     })
-    const isKeepPassword = ref(false)
+    const isKeepPassword = ref(localCache.getCache('isKeepPassword') ?? false)
+    const formRef = ref<InstanceType<typeof ElForm>>()
+
+    const onLogin = () => {
+        formRef.value?.validate((valid) => {
+            if (valid) {
+                if (isKeepPassword.value) {
+                    localCache.setCache('name', auth.name)
+                    localCache.setCache('password', auth.password)
+                    localCache.setCache('isKeepPassword', isKeepPassword.value)
+                    loginStore.accountLogin({ ...auth })
+                } else {
+                    localCache.removeCache('name')
+                    localCache.removeCache('password')
+                    localCache.removeCache('isKeepPassword')
+                }
+            }
+        })
+    }
 </script>
 
 <style scoped lang="less">
@@ -82,6 +102,7 @@
 
             .el-checkbox {
                 margin-right: 1.8rem;
+                color: #ffffff87;
             }
         }
     }

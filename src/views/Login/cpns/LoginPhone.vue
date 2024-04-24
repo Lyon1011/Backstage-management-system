@@ -115,13 +115,9 @@
             max-width: 35rem;
             margin-left: 1rem;
         }
-        .password-control {
-            display: flex;
-            flex: 1;
-            justify-content: flex-start;
-
+        .code-control {
             .el-checkbox {
-                margin-right: 1.8rem;
+                color: #ffffff87;
             }
         }
     }

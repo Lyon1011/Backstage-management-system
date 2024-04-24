@@ -1,3 +1,4 @@
+import localCache from '@/utils/cache'
 import XHRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
@@ -5,10 +6,10 @@ const xhRequest = new XHRequest({
     headers: {},
     baseURL: BASE_URL,
     timeout: TIME_OUT,
-    showLoading: true,
     interceptors: {
         requestInterceptor(config) {
-            const token = ''
+            const token = localCache.getCache('token')
+
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`
             }
