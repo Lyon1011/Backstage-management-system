@@ -5,8 +5,12 @@
                 <NavMenu :isCollapse="isCollapse" />
             </el-aside>
             <el-container>
-                <el-header><NavHeader @getCollapse="getCollapse" /></el-header>
-                <el-main>Main</el-main>
+                <el-header>
+                    <NavHeader @getCollapse="getCollapse" />
+                </el-header>
+                <el-main>
+                    <RouterView />
+                </el-main>
             </el-container>
         </el-container>
     </div>
@@ -16,6 +20,7 @@
     import NavMenu from '@/components/nav-menu'
     import NavHeader from '@/components/nav-header'
     import { ref } from 'vue'
+    import { RouterView } from 'vue-router'
 
     const isCollapse = ref<boolean>()
     function getCollapse(nowCollapse: boolean) {
@@ -43,10 +48,11 @@
                 .el-header {
                     display: flex;
                     align-items: center;
+                    justify-content: space-between;
                     background-color: #fff;
                 }
                 .el-main {
-                    background: rgba(128, 128, 128, 0.351);
+                    background: #eff1f6;
                 }
             }
         }

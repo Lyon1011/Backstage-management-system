@@ -22,7 +22,7 @@ interface menuType {
     type: number
     url: string
     parentId?: number
-    children?: menuType[]
+    children: menuType[]
 }
 
 export { Account, LoginResponse, ResponseType, menuType }

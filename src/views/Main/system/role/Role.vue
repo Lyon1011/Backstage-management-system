@@ -1,18 +1,18 @@
 <template>
-  <div class="role">
-    <h2>role</h2>
-  </div>
+    <div class="role">
+        <h2>role</h2>
+    </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+    import { defineComponent } from 'vue'
 
-export default defineComponent({
-  name: 'Role',
-  setup() {
-    return {}
-  }
-})
+    export default defineComponent({
+        name: 'Role',
+        setup() {
+            return {}
+        }
+    })
 </script>
 
 <style scoped></style>

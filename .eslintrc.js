@@ -32,6 +32,9 @@ module.exports = {
         //     }
         // ],
         // indent: ['error', 4]
-        indent: 0
+        indent: 0,
+        '@typescript-eslint/no-var-requires': 0,
+        'vue/valid-v-for': 0,
+        'vue/no-setup-props-destructure': 0
     }
 }

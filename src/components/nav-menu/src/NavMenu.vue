@@ -7,26 +7,34 @@
         background-color="#1d1d1d"
         popper-effect="dark"
         popper-class="popper-box"
+        :default-active="currentMenuId"
     >
         <template v-for="menu in menusList" :key="menu.id">
-            <template v-if="(menu as menuType).type === 1">
+            <template v-if="menu.type === 1">
                 <!-- 一级菜单 -->
-                <el-sub-menu :index="(subIndex++).toString()">
+                <el-sub-menu :index="menu.id + ''">
                     <template #title>
                         <!-- <i v-if="menu.icon" :class="menu.icon"></i> -->
                         <el-icon style="width: 16px; height: 16px">
                             <Menu />
                         </el-icon>
-                        <span>{{ (menu as menuType).name }}</span>
+                        <span>{{ menu.name }}</span>
                     </template>
                     <!-- 二级菜单 -->
                     <el-menu-item-group>
                         <template
-                            v-for="childMenu in (menu as menuType).children"
+                            v-for="childMenu in menu.children"
                             :key="childMenu.id"
                         >
                             <el-menu-item
-                                :index="`${subIndex}-${childIndex++}`"
+                                :class="
+                                    childMenu.url ===
+                                    router.currentRoute.value.path
+                                        ? 'is-active'
+                                        : ''
+                                "
+                                :index="childMenu.id + ''"
+                                @click="handleMenuItemClick(childMenu)"
                             >
                                 <i
                                     v-if="childMenu.icon"
@@ -39,7 +47,7 @@
                 </el-sub-menu>
             </template>
             <template v-else>
-                <el-menu-item :index="(subIndex++).toString">
+                <el-menu-item :index="menu.id + ''">
                     <component
                         v-if="(menu as menuType).icon"
                         :is="(menu as menuType).icon"
@@ -54,20 +62,26 @@
 
 <script lang="ts" setup>
     import { menuType } from '@/store/type'
-    import { toRefs, defineProps } from 'vue'
+    import { toRefs, defineProps, ref } from 'vue'
+    import { pathMapToMenu } from '@/utils/map-menus'
     import useLoginStore from '@/store/login'
+    import router from '@/router'
 
     const { menusList } = useLoginStore()
-    const subIndex = 1
-    const childIndex = 1
-    // const isCollapse = ref<boolean>(false)
-    // const iconsList = ['Menu', 'Menu', 'Menu']
     const props = defineProps({
         isCollapse: Boolean
     })
 
     const { isCollapse } = toRefs(props)
-    console.log(props.isCollapse)
+
+    const currentMenu = pathMapToMenu(menusList, router.currentRoute.value.path)
+    const currentMenuId = ref<string>(currentMenu?.id + '')
+
+    function handleMenuItemClick(menu: any) {
+        router.push({
+            path: menu.url ?? '/not-found'
+        })
+    }
 </script>
 
 <style scoped lang="less">
@@ -95,18 +109,36 @@
                 }
                 .el-menu-item {
                     font-size: 0.8rem;
+                    &:hover {
+                        background-color: #222f3b;
+                        color: #409eff;
+                    }
                 }
-                .el-menu-item:hover {
-                    background-color: #222f3b;
+                .el-menu-item.is-active {
+                    background-color: #222f3b !important;
                     color: #409eff;
                 }
             }
         }
     }
+
+    .el-menu--collapse {
+        .is-active {
+            /deep/ .el-sub-menu__title {
+                background-color: #222f3b;
+                color: #409eff;
+            }
+        }
+    }
+
     .popper-box {
         .el-menu-item-group {
             /deep/ .el-menu-item-group__title {
                 display: none;
+            }
+            .is-active {
+                background-color: #222f3b;
+                color: #409eff;
             }
             ul {
                 .el-menu-item:hover {

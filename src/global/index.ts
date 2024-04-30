@@ -1,6 +1,6 @@
-import registerElement from './register-element'
 import type { App } from 'vue'
+import registerProperties from './register-properties'
 
 export default function registerApp(app: App) {
-    registerElement(app)
+    registerProperties(app)
 }

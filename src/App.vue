@@ -3,13 +3,7 @@
 </template>
 
 <script lang="ts" name="" setup>
-    import { RouterLink, RouterView } from 'vue-router'
-    import xhRequest from './service'
-    console.log(
-        xhRequest.instance.get('/login').then((res) => {
-            console.log(res)
-        })
-    )
+    import { RouterView } from 'vue-router'
 </script>
 
 <style scoped></style>

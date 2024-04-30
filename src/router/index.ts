@@ -1,5 +1,6 @@
 import localCache from '@/utils/cache'
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
+import useSystemStore from '@/store/main/system'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -8,11 +9,16 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/login',
-        component: () => import('@/views/Login/Login.vue')
+        component: () => import('@/views/login/Login.vue')
     },
     {
+        name: 'main',
         path: '/main',
-        component: () => import('@/views/Main/Main.vue')
+        component: () => import('@/views/main/Main.vue')
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        component: () => import('@/views/not-found/NotFound.vue')
     }
 ]
 
