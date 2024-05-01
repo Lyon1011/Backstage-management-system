@@ -42,6 +42,9 @@
             </template>
         </el-row>
     </el-form>
+    <div class="footer-box">
+        <slot name="footer"> </slot>
+    </div>
 </template>
 
 <script lang="ts" name="form" setup>
@@ -98,5 +101,10 @@
 <style scoped>
     .el-form-item {
         margin: 10px 0;
+    }
+    .footer-box {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 10px;
     }
 </style>

@@ -32,15 +32,41 @@
 
 <script lang="ts" name="PageContent" setup>
     import EncapsulateTable from '@/encapsulate-ui/table'
-    import { defineProps } from 'vue'
+    import { defineProps, defineExpose } from 'vue'
+    import useSystemStore from '@/store/main/system'
 
-    const { contentTableConfig } = defineProps({
+    const { contentTableConfig, pageName } = defineProps({
         contentTableConfig: {
             type: Object,
             required: true
+        },
+        pageName: {
+            type: String,
+            required: true
         }
     })
+
+    const { getPagesList } = useSystemStore()
+
+    // 获取页面数据
+    // queryParam 将用于传入查询表格的参数
+    const getPagesData = (queryParam: object = {}) => {
+        getPagesList({
+            pageName,
+            queryInfo: {
+                offset: 0,
+                size: 10,
+                ...queryParam
+            }
+        })
+    }
+    getPagesData()
+
     const { usersList, propsList } = contentTableConfig
+
+    defineExpose({
+        getPagesData
+    })
 </script>
 
 <style scoped></style>

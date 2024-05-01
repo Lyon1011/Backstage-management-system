@@ -1,8 +1,8 @@
 import xhRequest from '@/service'
-import { getPagesListParam } from './types'
+import { getPagesListRequestParam } from './types'
 import { ResponseType } from '@/service/login/types'
 
-const getPageListData = (params: getPagesListParam) => {
+const getPageListData = (params: getPagesListRequestParam) => {
     return xhRequest.post<ResponseType>({
         headers: {},
         url: params.url,
